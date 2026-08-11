@@ -2,7 +2,6 @@ import numpy as np
 from tqdm import tqdm
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
-pip install gensim
 from gensim.models import Doc2Vec
 from sklearn import utils
 from sklearn.model_selection import train_test_split
