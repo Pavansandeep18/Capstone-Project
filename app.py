@@ -5,9 +5,6 @@ import seaborn as sns
 import re
 import string
 import warnings
-
-warnings.filterwarnings("ignore")
-
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
