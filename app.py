@@ -1,7 +1,3 @@
-Amazon Product Reviews Analytics Capstone Project
-
-Step 1: Importing the Libraries
-
 import numpy as np
 from tqdm import tqdm
 import pandas as pd
@@ -19,24 +15,14 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import cosine_similarity
 
-....................................................................................
-
-Step 2: Load Dataset
-
 df = pd.read_csv(
     "/content/Amazon_Reviews.csv",
     engine="python",
     encoding="latin1"
 )
 
-.......................................................................
-
-Step 3: Check Missing Columns
-
 df.isnull().sum()
 
-....................
-Handle Missing Values
 
 df.dropna(subset=[
     'Review Text',
@@ -48,32 +34,20 @@ df.dropna(subset=[
 ], inplace=True)
 
 df.isnull().sum()
-....................................
-Check Duplicated Records
-
 print(df.duplicated().sum())
-
-.....................................
-
-Drop Unwanted Columns
-
 df.drop(columns=[
     'Profile Link',
     'Review Count',
     'Date of Experience'
 ], inplace=True)
 
-..................................
 
-Check Data Types
 print(df.dtypes)
-.....................................
+
 Convert Rating to numeric
 
 df["Rating"] = df["Rating"].str.extract(r'(\d+\.?\d*)')
 df["Rating"] = pd.to_numeric(df["Rating"], errors="coerce")
-.........................................................................
-Convert Review Date to Datetime
 
 # Convert Review Date to datetime
 df["Review Date"] = pd.to_datetime(df["Review Date"], errors="coerce")
@@ -91,15 +65,9 @@ df["Month_Number"] = df["Review Date"].dt.month
 # Display the result
 print(df[["Review Date", "Year", "Month"]].head())
 
-.................................................................
-
 df.columns.to_list()
 df.isnull().sum()
 print(df["Rating"].head(10))
-
-.....................................................
-
-Step 4: Download NLTK data
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -107,14 +75,8 @@ import nltk
 nltk.download('stopwords')
 nltk.download('wordnet')
 
-..............................................
-
-Step 5: Feature Engineering
-
 # Review Length
 df["ReviewLength"]=df["Review Text"].apply(lambda x:len(str(x).split()))
-
-.......................
 
 # Sentiment Label
 def sentiment(r):
@@ -129,10 +91,6 @@ def sentiment(r):
         return "Neutral"
 
 df["SentimentLabel"]=df["Rating"].apply(sentiment)
-
-..........................................................
-
-Step 6: Text Preprocessing
 
 lemmatizer=WordNetLemmatizer()
 
@@ -152,26 +110,15 @@ def clean(text):
 
 df["CleanReview"]=df["Review Text"].apply(clean)
 
-.............................................................................
-Step 7 : Encoding
-
 le=LabelEncoder()
 
 df["Country"]=le.fit_transform(df["Country"])
 
 df["Sentiment"]=le.fit_transform(df["SentimentLabel"])
 
-....................................................
-
-Step 8: TF-IDF
-
 tfidf=TfidfVectorizer(max_features=5000)
 
 X=tfidf.fit_transform(df["CleanReview"])
-
-.......................................................
-
-Step 9: Scaling
 
 scaler=StandardScaler(with_mean=False)
 
@@ -184,35 +131,20 @@ y=df["Sentiment"]
 
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
 
-..................................................................................
-
-Train the model
-
 model=LogisticRegression(max_iter=1000)
 
 model.fit(X_train,y_train)
 
-..................................
-Step 11 : Prediction
-
 pred=model.predict(X_test)
-
-....................................
-
-Step 12 : Evaluation
 
 print("Accuracy")
 print(accuracy_score(y_test,pred))
 print(classification_report(y_test,pred))
 
-...............................
 
 #Confusion Matrix
 cm=confusion_matrix(y_test,pred)
 sns.heatmap(cm, annot=True, fmt='d',cmap='Blues')
-
-......................................................
-Build Visualizations
 
 # Rating Distribution
 plt.figure(figsize=(8,5))
@@ -222,10 +154,6 @@ sns.countplot(x="Rating",data=df)
 plt.title("Rating Distribution")
 
 plt.show()
-
-...............................................
-
-#Sentiment distribution by category.
 
 plt.figure(figsize=(12,6))
 
@@ -246,31 +174,16 @@ plt.figure(figsize=(10,6))
 sns.barplot(x=top.values,y=top.index)
 
 plt.title("Top 10 Most Reviewed Products")
-
-................................................
-
-Save The Model
-
 import joblib
 joblib.dump(model,"model.pkl")
 joblib.dump(tfidf,"tfidf.pkl")
 joblib.dump(le, "label_encoder.pkl")
 
-.....................................
 
 print(le.classes_)
 
-..................................
-
-Save the processed dataset
-
 df.to_csv("processed_reviews.csv", index=False)
 
-...................................................
-Streamlit App
-
-
-%%writefile app.py
 
 import streamlit as st
 import pandas as pd
@@ -336,13 +249,3 @@ if st.button("Predict Sentiment"):
             st.write(df.iloc[idx]["Review Text"])
             st.write("---")
 
-.....................................................................
-
-!ls
-
-..........................................
-
-Download the file app.py
-
-from google.colab import files
-files.download("app.py")
