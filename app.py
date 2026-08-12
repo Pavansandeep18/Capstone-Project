@@ -1,5 +1,5 @@
 import numpy as np
-from tqdm import tqdm
+#from tqdm import tqdm
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from gensim.models import Doc2Vec
