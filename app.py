@@ -39,12 +39,7 @@ df.drop(columns=[
     'Review Count',
     'Date of Experience'
 ], inplace=True)
-
-
 print(df.dtypes)
-
-Convert Rating to numeric
-
 df["Rating"] = df["Rating"].str.extract(r'(\d+\.?\d*)')
 df["Rating"] = pd.to_numeric(df["Rating"], errors="coerce")
 
