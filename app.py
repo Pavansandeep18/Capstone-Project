@@ -94,11 +94,10 @@ def clean(text):
 
     text=text.lower()
 
-    text=re.sub(r'[^a-zA-Z ]',' ',text)
+     text=re.sub(r'[^a-zA-Z ]',' ',text)
 
-    words=text.split()
-
-    words=[lemmatizer.lemmatize(word) for word in words if word not in stop]
+     words=text.split()
+     words=[lemmatizer.lemmatize(word) for word in words if word not in stop]
 
     return " ".join(words)
 
@@ -117,8 +116,6 @@ X=tfidf.fit_transform(df["CleanReview"])
 scaler=StandardScaler(with_mean=False)
 
 X=scaler.fit_transform(X)
-Step 10: Training and Testing
-
 y=df["Sentiment"]
 
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
@@ -156,9 +153,6 @@ data=df)
 
 plt.show()
 
-........................................
-
-#Top 10 most reviewed products using Matplotlib, Seaborn.
 top=df['Review Title'].value_counts().head(10)
 
 plt.figure(figsize=(10,6))
