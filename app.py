@@ -1,18 +1,3 @@
-import numpy as np
-#from tqdm import tqdm
-import pandas as pd
-#from sklearn.feature_extraction.text import TfidfVectorizer
-from gensim.models import Doc2Vec
-from sklearn import utils
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder,StandardScaler
-import gensim
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
-import re
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.metrics.pairwise import cosine_similarity
 
 df = pd.read_csv(
     "/content/Amazon_Reviews.csv",
