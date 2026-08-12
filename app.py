@@ -117,8 +117,6 @@ X=tfidf.fit_transform(df["CleanReview"])
 scaler=StandardScaler(with_mean=False)
 
 X=scaler.fit_transform(X)
-.....................................................
-
 Step 10: Training and Testing
 
 y=df["Sentiment"]
