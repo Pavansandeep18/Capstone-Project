@@ -94,10 +94,10 @@ def clean(text):
 
     text=text.lower()
 
-     text=re.sub(r'[^a-zA-Z ]',' ',text)
+    text=re.sub(r'[^a-zA-Z ]',' ',text)
 
-     words=text.split()
-     words=[lemmatizer.lemmatize(word) for word in words if word not in stop]
+    words=text.split()
+    words=[lemmatizer.lemmatize(word) for word in words if word not in stop]
 
     return " ".join(words)
 
